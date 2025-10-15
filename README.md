@@ -73,3 +73,23 @@
 - [ ] 모든 검증 실패 시 **`IllegalArgumentException`** 던짐
 - [ ] `main`(또는 Application 레이어)에서 **예외 메시지 출력 후 종료**
 
+## 🧾 문자열 덧셈 계산기 — RDD(책임-주도 설계) 관점 정리
+
+### 1️⃣ 협력(대화) 시나리오 — 메시지 흐름
+
+| 송신자 | 수신자 | 메시지 | 설명 |
+|:--|:--|:--|:--|
+| Application | Calculator | `sumOf(String input)` | **무엇:** 합계를 구하라 |
+| Calculator | Expression | `parse(String input)` | 입력을 표현으로 바꿔라 |
+| Expression | DelimiterPolicy | `resolve(input)` | 구분자 정책을 얻어라 |
+| Expression | Tokenizer | `tokenize(input, policy)` | 정책으로 토큰화하라 |
+| Tokenizer | Validator | `validate(tokens)` | 유효한 양의 정수만 허용 |
+| Tokenizer | Numbers | `toNumbers(tokens)` | 숫자 컬렉션으로 변환 |
+| Calculator | Numbers | `sum()` | 합계를 구하라 |
+| Calculator | Application | `return long` | 결과 반환 |
+
+> 💡 협력은 요청–응답 메시지로 표현되며, 메시지가 **인터페이스를 결정**한다.  
+> 각 객체는 자율적으로 내부 메서드를 선택하여 행동한다 (**캡슐화**).
+
+
+
