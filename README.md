@@ -92,4 +92,22 @@
 > 각 객체는 자율적으로 내부 메서드를 선택하여 행동한다 (**캡슐화**).
 
 
+--
+
+### 2️⃣ 역할 · 책임 · 메시지 (Role–Responsibility–Message)
+
+| 역할(Role) | 책임(Responsibility) | 주요 메시지(외부 공개) |
+|:--|:--|:--|
+| **Calculator** | 문자열 합계 계산의 파사드(진입점). 협력을 조정만 하고 세부 구현은 모름 | `sumOf(String): long` |
+| **Expression** | 입력 분석의 오케스트레이션. 커스텀/기본 구분자 판별 및 토큰화 흐름 구성 | `parse(String): Numbers` |
+| **DelimiterPolicy** | 구분자 규칙 제공(기본/커스텀). 규칙 추가 시에도 계약 동일 | `resolve(String): Delimiters` |
+| **Tokenizer** | 구분자 정책으로 입력을 토큰 리스트로 분리 | `tokenize(String, Delimiters): List<String>` |
+| **Validator** | 토큰 유효성 검사(빈 토큰, 음수, 범위 초과 등 정책 캡슐화) | `validate(List<String>)` |
+| **Numbers** | 불변 숫자 컬렉션. 합계 및 오버플로 체크 책임 | `sum(): long` |
+
+> ⚙️ **설계 품질**은 책임 할당의 적절성에 달려 있다.  
+> 역할은 **대체 가능성과 다형성** 을 열어준다 — 예: `DelimiterPolicy`의 다형 구현.
+
+
+
 
