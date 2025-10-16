@@ -66,6 +66,33 @@ class ApplicationTest extends NsTest {
         );
     }
 
+    // 커스텀 구분자 형식
+    @Test
+    void 예외_커스텀_구분자_누락() {
+        // 문제 명세: "//\n1;2" → 여기서는 "\\n" 형태를 그대로 사용
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("//\\n1;2"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 예외_커스텀_구분자_두글자() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("//12\\n1"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 예외_커스텀_구분자_숫자() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("//1\\n1"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+
     @Override
     public void runMain() {
         Application.main(new String[]{});
