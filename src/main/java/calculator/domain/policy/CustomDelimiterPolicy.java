@@ -22,6 +22,11 @@ public final class CustomDelimiterPolicy implements DelimiterPolicy {
             throw new IllegalArgumentException("커스텀 구분자는 단일 문자여야 합니다: " + customRegex);
         }
 
+        char c = customRegex.charAt(0);
+        if (Character.isDigit(c)) {
+            throw new IllegalArgumentException("커스텀 구분자가 숫자일 수 없습니다: " + c);
+        }
+
         return customRegex;
     }
 }
