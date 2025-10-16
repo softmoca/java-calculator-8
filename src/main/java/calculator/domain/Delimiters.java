@@ -1,6 +1,6 @@
 package calculator.domain;
 
-final class Delimiters {
+public final class Delimiters {
 
     private final String regex;
 
