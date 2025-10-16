@@ -18,8 +18,12 @@ public final class DefaultValidator implements Validator {
                 throw new IllegalArgumentException("비어 있는 토큰은 허용되지 않습니다: index=" + i);
             }
 
-            // 2) 숫자만 허용 (부호/문자 금지)
-            //  - 모두 숫자인지 확인
+            // 2) 음수 금지 (가장 먼저 검사)
+            if (t.startsWith("-")) {
+                throw new IllegalArgumentException("0 또는 음수는 허용되지 않습니다: " + t);
+            }
+
+            // 3) 숫자만 허용 (부호/문자 금지)
             for (int j = 0; j < t.length(); j++) {
                 char ch = t.charAt(j);
                 if (ch < '0' || ch > '9') {
@@ -27,13 +31,12 @@ public final class DefaultValidator implements Validator {
                 }
             }
 
-            // 3) 선행 0 불허 (길이>1 이고 '0' 시작)
+            // 4) 선행 0 불허 (길이>1 이고 '0' 시작)
             if (t.length() > 1 && t.charAt(0) == '0') {
                 throw new IllegalArgumentException("선행 0은 허용되지 않습니다: " + t);
             }
 
-            // 4) 0 및 음수 금지
-            //    음수는 위의 숫자만 허용 검사에서 이미 걸러짐
+            // 5) 0 금지
             if ("0".equals(t)) {
                 throw new IllegalArgumentException("0 또는 음수는 허용되지 않습니다: 0");
             }

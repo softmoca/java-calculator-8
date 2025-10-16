@@ -24,6 +24,7 @@ public class StringAddController {
             out.printResult(sum);
         } catch (IllegalArgumentException e) {
             out.printError(e.getMessage());
+            throw e;
         }
     }
 }
