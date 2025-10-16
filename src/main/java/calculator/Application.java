@@ -1,7 +1,16 @@
 package calculator;
 
+import calculator.controller.StringAddController;
+import calculator.domain.Calculator;
+import calculator.view.InputView;
+import calculator.view.OutputView;
+
 public class Application {
     public static void main(String[] args) {
-        // TODO: 프로그램 구현
+        InputView in = new InputView();
+        OutputView out = new OutputView();
+        Calculator calculator = new Calculator();
+        StringAddController controller = new StringAddController(in, out, calculator);
+        controller.handle();
     }
 }
