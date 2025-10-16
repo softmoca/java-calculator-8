@@ -49,18 +49,8 @@ final class Expression {
         Validator validator = new DefaultValidator();
         validator.validate(tokens);
 
-        // 6) 숫자로 변환
-        List<Long> numbers = new ArrayList<Long>(tokens.size());
-        for (int i = 0; i < tokens.size(); i++) {
-            String token = tokens.get(i);
-
-            try {
-                numbers.add(Long.parseLong(token));
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("숫자가 아닌 값이 포함되어 있습니다: " + token);
-            }
-        }
-        return new Numbers(numbers);
+        // 6) 숫자 변환 책임을 Numbers로 이동 (파싱 범위 초과 메시지 일원화)
+        return Numbers.from(tokens);
     }
 
     private List<String> tokenize(String input, Delimiters delimiters) {

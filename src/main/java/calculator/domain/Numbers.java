@@ -1,5 +1,6 @@
 package calculator.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class Numbers {
@@ -8,6 +9,26 @@ public final class Numbers {
 
     public Numbers(List<Long> values) {
         this.values = values;
+    }
+
+    public static Numbers from(List<String> tokens) {
+        if (tokens == null) {
+            throw new IllegalArgumentException("토큰 목록이 없습니다.");
+        }
+        List<Long> nums = new ArrayList<Long>(tokens.size());
+        for (int i = 0; i < tokens.size(); i++) {
+            String t = tokens.get(i);
+            try {
+                long v = Long.parseLong(t);
+                nums.add(v);
+            } catch (NumberFormatException e) {
+                // validator를 통과했지만 Long 범위를 넘는 경우 등
+                throw new IllegalArgumentException(
+                        "정수 범위를 초과했습니다: token=" + t
+                );
+            }
+        }
+        return new Numbers(nums);
     }
 
     public long sum() {
