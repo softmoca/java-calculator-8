@@ -1,4 +1,14 @@
 package calculator.domain;
 
-public class Delimiters {
+final class Delimiters {
+
+    private final String regex;
+
+    Delimiters(String regex) {
+        this.regex = regex;
+    }
+
+    String regex() {
+        return this.regex;
+    }
 }
