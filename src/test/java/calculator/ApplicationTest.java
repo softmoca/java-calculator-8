@@ -32,6 +32,40 @@ class ApplicationTest extends NsTest {
         );
     }
 
+
+    // 값 제약
+    @Test
+    void 예외_음수_포함() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("-1,2"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 예외_제로_포함() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("0,1"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 예외_비숫자_포함() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("1,a"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 예외_선행0_불허() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("01,2"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
     @Override
     public void runMain() {
         Application.main(new String[]{});
