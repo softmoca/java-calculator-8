@@ -2,6 +2,8 @@ package calculator.domain;
 
 import calculator.domain.policy.BasicDelimiterPolicy;
 import calculator.domain.policy.CustomDelimiterPolicy;
+import calculator.domain.validate.DefaultValidator;
+import calculator.domain.validate.Validator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,16 +32,28 @@ final class Expression {
             delimiters = new Delimiters(regex);
         }
 
-        List<String> tokens = tokenize(body, delimiters);
-        List<Long> numbers = new ArrayList<>();
+        // 3) 토큰화
+        List<String> rawTokens = tokenize(body, delimiters);
 
+        // 4) 트리밍
+        List<String> tokens = new ArrayList<String>(rawTokens.size());
+        for (int i = 0; i < rawTokens.size(); i++) {
+            String t = rawTokens.get(i);
+            if (t != null) {
+                t = t.trim();
+            }
+            tokens.add(t);
+        }
+
+        // 5) 검증
+        Validator validator = new DefaultValidator();
+        validator.validate(tokens);
+
+        // 6) 숫자로 변환
+        List<Long> numbers = new ArrayList<Long>(tokens.size());
         for (int i = 0; i < tokens.size(); i++) {
             String token = tokens.get(i);
-            token = token.trim();
 
-            if (token.isEmpty()) {
-                throw new IllegalArgumentException("비어 있는 토큰은 허용되지 않습니다: index=" + i);
-            }
             try {
                 numbers.add(Long.parseLong(token));
             } catch (NumberFormatException e) {
