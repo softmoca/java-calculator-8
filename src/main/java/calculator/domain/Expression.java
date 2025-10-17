@@ -12,6 +12,10 @@ final class Expression {
     private static final String BASIC_DELIMITERS = ",|:";
 
     Numbers parse(String input) {
+        if (input == null || input.trim().isEmpty()) {
+            return Numbers.zero();
+        }
+
         Delimiters delimiters;
         String body = input;
 
@@ -21,6 +25,9 @@ final class Expression {
         if (customRegex != null) {
             int nl = input.indexOf("\\n");
             body = input.substring(nl + 2);
+            if (body.isEmpty()) {
+                return Numbers.zero();
+            }
             delimiters = new Delimiters(customRegex);
         } else {
             // 2) 기본 구분자 폴백
