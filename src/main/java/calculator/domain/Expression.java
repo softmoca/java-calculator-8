@@ -54,7 +54,7 @@ final class Expression {
     }
 
     private List<String> tokenize(String input, Delimiters delimiters) {
-        String[] parts = input.split(delimiters.regex());
+        String[] parts = input.split(delimiters.regex(), -1);
         List<String> list = new ArrayList<>();
         for (int i = 0; i < parts.length; i++) {
             list.add(parts[i]);
