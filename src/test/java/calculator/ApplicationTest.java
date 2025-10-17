@@ -81,6 +81,30 @@ class ApplicationTest extends NsTest {
     }
 
 
+    @Test
+    void 구분자만_입력() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException(",,::"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 커스텀_구분자_구문_오류() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("//;1;2;3"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 구분자_없이_줄바꿈() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("//\\n1,2,3"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
     // 토큰 무결성
     @Test
     void 예외_연속_구분자_중간_빈토큰() {
