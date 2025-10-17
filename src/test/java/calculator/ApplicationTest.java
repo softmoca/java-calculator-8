@@ -32,6 +32,23 @@ class ApplicationTest extends NsTest {
         );
     }
 
+    // 토큰 무결성
+    @Test
+    void 예외_연속_구분자_중간_빈토큰() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("1,,2"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 예외_말단_구분자_말단_빈토큰() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("1:"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
 
     // 값 제약
     @Test
