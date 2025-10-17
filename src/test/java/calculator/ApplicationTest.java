@@ -32,6 +32,27 @@ class ApplicationTest extends NsTest {
         );
     }
 
+
+    @Test
+    void 기본_구분자_사용2() {
+
+        assertSimpleTest(() -> {
+            run("1,2");
+            assertThat(output()).contains("결과 : 3");
+
+            run("1,2,3");
+            assertThat(output()).contains("결과 : 6");
+
+            run("1,2:3");
+            assertThat(output()).contains("결과 : 6");
+
+            run("1,202:3");
+            assertThat(output()).contains("결과 : 206");
+        });
+
+    }
+
+
     // 토큰 무결성
     @Test
     void 예외_연속_구분자_중간_빈토큰() {
