@@ -63,6 +63,14 @@ class ApplicationTest extends NsTest {
         });
     }
 
+    @Test
+    void 커스텀_구분자_구분자만_존재_빈문자열_반환() {
+        assertSimpleTest(() -> {
+            run("//;\\n");
+            assertThat(output()).contains("결과 : 0");
+        });
+    }
+
 
     @Test
     void 빈_문자열일_경우() {
