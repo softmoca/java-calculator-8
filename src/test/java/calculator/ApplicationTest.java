@@ -117,6 +117,22 @@ class ApplicationTest extends NsTest {
         );
     }
 
+    @Test
+    void 예외_파싱_범위_초과() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("99999999999999999999,1"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 예외_합계_오버플로우() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("9223372036854775807,1"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
 
     @Override
     public void runMain() {
