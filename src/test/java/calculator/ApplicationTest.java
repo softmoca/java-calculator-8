@@ -49,6 +49,14 @@ class ApplicationTest extends NsTest {
         );
     }
 
+    @Test
+    void 예외_전체_구분자만_양쪽_빈토큰() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException(","))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
 
     // 값 제약
     @Test
