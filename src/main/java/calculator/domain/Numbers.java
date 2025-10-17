@@ -31,6 +31,11 @@ public final class Numbers {
         return new Numbers(nums);
     }
 
+    // ✅ 빈 입력 대응
+    public static Numbers zero() {
+        return new Numbers(new ArrayList<Long>(0));
+    }
+
     public long sum() {
         long result = 0L;
         for (int i = 0; i < values.size(); i++) {

@@ -21,15 +21,16 @@ final class Expression {
         if (customRegex != null) {
             int nl = input.indexOf("\\n");
             body = input.substring(nl + 2);
-            if (body.isEmpty()) {
-                throw new IllegalArgumentException("커스텀 구분자 선언 이후 본문이 비어 있습니다.");
-            }
             delimiters = new Delimiters(customRegex);
         } else {
             // 2) 기본 구분자 폴백
             BasicDelimiterPolicy basic = new BasicDelimiterPolicy();
             String regex = basic.resolve(input); // 항상 기본 제공
             delimiters = new Delimiters(regex);
+        }
+
+        if (body.isEmpty()) {
+            return Numbers.zero();
         }
 
         // 3) 토큰화
