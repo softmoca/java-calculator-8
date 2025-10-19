@@ -3,20 +3,7 @@ package calculator.domain;
 import java.util.Set;
 
 public final class Delimiters {
-
-
     private final Set<String> values;
-
-
-    Delimiters(String regex) {
-        // 임시로 기존 방식 유지 (나중에 제거)
-        this.values = Set.of(regex);
-    }
-
-    String regex() {
-        // 임시로 첫 번째 값 반환 (나중에 제거)
-        return values.iterator().next();
-    }
 
 
     private Delimiters(Set<String> values) {
