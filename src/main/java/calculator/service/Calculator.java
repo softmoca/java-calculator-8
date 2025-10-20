@@ -2,7 +2,7 @@ package calculator.service;
 
 import calculator.domain.expression.Expression;
 import calculator.domain.tokenizer.Tokenizer;
-import calculator.domain.validator.PositiveIntValidator;
+import calculator.domain.validator.PositiveLongValidator;
 import calculator.domain.value.Numbers;
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class Calculator {
         List<String> tokens = Tokenizer.split(expr.payload(), expr.delimiters());
 
         // 3) 검증
-        PositiveIntValidator.validate(tokens);
+        PositiveLongValidator.validate(tokens);
 
         // 4) 숫자 변환 + 합산
         return Numbers.from(tokens).sum();
