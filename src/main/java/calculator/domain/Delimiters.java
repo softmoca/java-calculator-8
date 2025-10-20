@@ -1,6 +1,7 @@
 package calculator.domain;
 
 import java.util.Set;
+import java.util.regex.Pattern;
 
 public final class Delimiters {
     private final Set<String> values;
@@ -35,11 +36,7 @@ public final class Delimiters {
     }
 
     private static String escape(String s) {
-        if (s.matches("[\\\\^$.|?*+()\\[\\]{}]")) {
-            return "\\" + s;
-        }
-        return s;
+        return Pattern.quote(s);  // Java 표준 이스케이프
     }
-
 
 }

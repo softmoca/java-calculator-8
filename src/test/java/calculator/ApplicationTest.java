@@ -58,6 +58,9 @@ class ApplicationTest extends NsTest {
             run("//;\\n1;2;3");
             assertThat(output()).contains("결과 : 6");
 
+            run("//.\\n21.6.7");
+            assertThat(output()).contains("결과 : 34");
+
             run("//;\\n1");
             assertThat(output()).contains("결과 : 1");
         });
