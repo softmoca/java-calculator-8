@@ -14,7 +14,7 @@ public final class Expression {
     }
 
     public static Expression from(String raw) {
-        InputForm form = new InputFormFactory().of(raw);
+        InputForm form = new InputFormFactory().createFrom(raw);
         return new Expression(form.delimiters(), form.body());
     }
 

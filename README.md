@@ -189,7 +189,7 @@
 | 사용자                  | **View(InputView)**      | 입력 제공                                   | 콘솔에서 문자열을 입력한다.                                     |
 | **Controller**       | **Calculator**           | `sumOf(String input)`                   | 입력 문자열의 합계를 계산하도록 요청한다. *(무엇을 할지 명령)*               |
 | **Calculator**       | **Expression**           | `from(String input)`                    | 문자열을 계산 가능한 표현(Expression)으로 해석하라는 요청 *(입력 해석 시작점)* |
-| **Expression**       | **InputFormFactory**     | `of(String raw)`                        | 입력 형태를 판별해 적절한 `InputForm`을 생성하라는 요청                |
+| **Expression**       | **InputFormFactory**     | `createFrom(String raw)`                | 입력 형태를 판별해 적절한 `InputForm`을 생성하라는 요청                |
 | **InputFormFactory** | **CustomFormRecognizer** | `recognize(String raw)`                 | `"//X\n"` 형태인지 검사. 맞으면 `CustomForm` 생성, 아니면 pass    |
 | **InputFormFactory** | **BasicFormRecognizer**  | `recognize(String raw)`                 | 커스텀이 아니면 기본 구분자로 `BasicForm` 생성                     |
 | **InputFormFactory** | **Expression**           | **return** `InputForm`                  | 인식 결과 반환 *(커스텀 또는 기본)*                              |
@@ -217,7 +217,7 @@
 | **Controller**           | 흐름 제어 *(입력 → 계산 → 출력)*                   | `void handle()`                                      | Controller |
 | **Calculator**           | 도메인 파사드 — 합계 계산 진입점                      | `int sumOf(String input)`                            | Domain     |
 | **Expression**           | 입력 해석 오케스트레이션 *(형태 인식 → 토큰화 → 검증 → 숫자화)* | `Expression from(String raw)`                        | Domain     |
-| **InputFormFactory**     | 입력 형태 식별 및 `InputForm` 생성                | `InputForm of(String raw)`                           | Domain     |
+| **InputFormFactory**     | 입력 형태 식별 및 `InputForm` 생성                | `InputForm createFrom(String raw)`                   | Domain     |
 | **InputFormRecognizer**  | 입력 형태 인식 *(체인 요소)*                       | `Optional<InputForm> recognize(String raw)`          | Domain     |
 | **CustomFormRecognizer** | `"//X\n"` 형식 인식 → `CustomForm` 생성        | `Optional<InputForm> recognize(String raw)`          | Domain     |
 | **BasicFormRecognizer**  | 일반 입력 → `BasicForm` 생성                   | `Optional<InputForm> recognize(String raw)`          | Domain     |

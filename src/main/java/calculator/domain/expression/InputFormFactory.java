@@ -11,7 +11,7 @@ final class InputFormFactory {
     private final List<InputFormRecognizer> chain =
             List.of(new CustomFormRecognizer(), new BasicFormRecognizer());
 
-    InputForm of(String raw) {
+    InputForm createFrom(String raw) {
         for (InputFormRecognizer r : chain) {
             Optional<InputForm> hit = r.recognize(raw);
             if (hit.isPresent()) {
