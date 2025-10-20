@@ -12,7 +12,7 @@ public final class PositiveIntValidator {
                 throw new IllegalArgumentException("빈 숫자는 허용되지 않습니다.");
             }
             if (!isInteger(t)) {
-                throw new IllegalArgumentException("숫자가 아닙니다: " + t);
+                throw new IllegalArgumentException("양의 정수만 허용됩니다: " + t);
             }
             if (t.length() > 1 && t.charAt(0) == '0') {
                 throw new IllegalArgumentException("선행 0은 허용되지 않습니다: " + t);

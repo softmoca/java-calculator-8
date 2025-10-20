@@ -4,6 +4,7 @@ import calculator.domain.expression.Expression;
 import calculator.domain.tokenizer.Tokenizer;
 import calculator.domain.validator.PositiveIntValidator;
 import calculator.domain.value.Numbers;
+import java.util.List;
 
 public class Calculator {
     public long sumOf(String input) {
@@ -11,7 +12,7 @@ public class Calculator {
         Expression expr = Expression.from(input);
 
         // 2) 토큰화
-        var tokens = Tokenizer.split(expr.payload(), expr.delimiters());
+        List<String> tokens = Tokenizer.split(expr.payload(), expr.delimiters());
 
         // 3) 검증
         PositiveIntValidator.validate(tokens);
