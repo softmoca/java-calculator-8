@@ -184,22 +184,23 @@
 
 ### 1️⃣ 협력(대화) 시나리오 — 메시지 흐름
 
-| **송신자**             | **수신자**                 | **메시지**                              | **설명**                                                  |
-|---------------------|-------------------------|--------------------------------------|---------------------------------------------------------|
-| 사용자                 | **View(InputView)**     | 입력 제공                                | 콘솔에서 문자열을 입력한다.                                         |
-| Controller          | **Calculator**(도메인 파사드) | `sumOf(String input)`                | 입력 문자열의 합계를 계산하도록 **무엇을 할지** 요청한다.                      |
-| **Calculator**      | **Expression**          | `parse(String input)`                | 입력을 계산 가능한 표현으로 변환하라는 요청 *(입력 해석 오케스트레이션 시작)*           |
-| **Expression**      | **DelimiterPolicy**     | `resolve(String input)`              | 사용할 구분자 규칙을 결정하라는 요청 *(기본/커스텀 판별)*                      |
-| **DelimiterPolicy** | **Expression**          | **return** `Delimiters`              | 결정된 구분자 집합을 **값 객체**로 반환                                |
-| **Expression**      | **Tokenizer**           | `tokenize(String input, Delimiters)` | 구분자 규칙에 따라 문자열을 **토큰 리스트**로 분리 *(트리밍 포함)*               |
-| **Tokenizer**       | **Delimiters**          | `toRegex()`                          | 구분자 집합을 토크나이저가 이해할 **정규식**으로 변환 요청                      |
-| **Expression**      | **Validator**           | `validate(List<String> tokens)`      | 추출된 토큰이 불변식/정책을 위반하지 않는지 검증 *(빈 토큰, 음수/0, 비숫자, 선행 0 등)* |
-| **Expression**      | **Numbers**             | `Numbers.from(List<String> tokens)`  | 유효한 토큰을 **숫자 컬렉션**으로 변환                                 |
-| **Expression**      | **Calculator**          | **return** `Numbers`                 | 숫자 컬렉션을 반환                                              |
-| **Calculator**      | **Numbers**             | `sum()`                              | 숫자 컬렉션의 **합계**를 계산 *(오버플로 감지)*                          |
-| **Numbers**         | **Calculator**          | **return** `long`                    | 계산된 합계를 반환                                              |
-| **Calculator**      | **Controller**          | **return** `long`                    | 최종 합계를 반환                                               |
-| **Controller**      | **View(OutputView)**    | `printResult(long sum)`              | 출력 단으로 전달, **정상 결과** 출력                                 |
+| **송신자**              | **수신자**                  | **메시지**                                 | **설명**                                              |
+|----------------------|--------------------------|-----------------------------------------|-----------------------------------------------------|
+| 사용자                  | **View(InputView)**      | 입력 제공                                   | 콘솔에서 문자열을 입력한다.                                     |
+| **Controller**       | **Calculator**           | `sumOf(String input)`                   | 입력 문자열의 합계를 계산하도록 요청한다. *(무엇을 할지 명령)*               |
+| **Calculator**       | **Expression**           | `from(String input)`                    | 문자열을 계산 가능한 표현(Expression)으로 해석하라는 요청 *(입력 해석 시작점)* |
+| **Expression**       | **InputFormFactory**     | `of(String raw)`                        | 입력 형태를 판별해 적절한 `InputForm`을 생성하라는 요청                |
+| **InputFormFactory** | **CustomFormRecognizer** | `recognize(String raw)`                 | `"//X\n"` 형태인지 검사. 맞으면 `CustomForm` 생성, 아니면 pass    |
+| **InputFormFactory** | **BasicFormRecognizer**  | `recognize(String raw)`                 | 커스텀이 아니면 기본 구분자로 `BasicForm` 생성                     |
+| **InputFormFactory** | **Expression**           | **return** `InputForm`                  | 인식 결과 반환 *(커스텀 또는 기본)*                              |
+| **Expression**       | **InputForm**            | `delimiters()` / `body()`               | 구분자 집합과 본문을 가져온다                                    |
+| **Expression**       | **Tokenizer**            | `split(String body, Delimiters delims)` | 본문을 구분자 기준으로 분리                                     |
+| **Tokenizer**        | **Delimiters**           | `toRegex()`                             | 구분자 집합을 정규식으로 변환                                    |
+| **Expression**       | **Validator**            | `validate(List<String> tokens)`         | 토큰의 유효성 검증 *(빈 토큰, 음수, 비숫자 등)*                      |
+| **Expression**       | **Numbers**              | `from(List<String> tokens)`             | 검증된 토큰을 숫자 컬렉션으로 변환                                 |
+| **Calculator**       | **Numbers**              | `sum()`                                 | 숫자 컬렉션의 합계를 계산                                      |
+| **Calculator**       | **Controller**           | **return** `int`                        | 결과 반환                                               |
+| **Controller**       | **View(OutputView)**     | `printResult(int sum)`                  | 결과를 사용자에게 출력                                        |
 
 > 💡 협력은 요청–응답 메시지로 표현되며, 메시지가 **인터페이스를 결정**한다.  
 > 각 객체는 자율적으로 내부 메서드를 선택하여 행동한다 (**캡슐화**).
@@ -209,19 +210,22 @@
 
 ### 2) 🧩 역할 · 책임 · 메시지 (Role–Responsibility–Message)
 
-| **역할(Role)**        | **책임(Responsibility)**                  | **공개 메시지(Interface)**                               | **계층**     |
-|---------------------|-----------------------------------------|-----------------------------------------------------|------------|
-| **InputView**       | 사용자 입력 수집                               | `String readLine()`                                 | View       |
-| **OutputView**      | 결과/오류 출력                                | `void printResult(long)`, `void printError(String)` | View       |
-| **Controller**      | 흐름 제어 *(입력 → 도메인 호출 → 출력)*              | `void handle()`                                     | Controller |
-| **Calculator**      | 도메인 파사드(합계 계산 진입점)                      | `long sumOf(String input)`                          | Domain     |
-| **Expression**      | 입력 해석 오케스트레이션 *(정책 → 토큰화 → 검증 → 숫자)*    | `Numbers parse(String input)`                       | Domain     |
-| **DelimiterPolicy** | 구분자 규칙 제공 *(기본/커스텀)*                    | `Delimiters resolve(String input)`                  | Domain     |
-| **Tokenizer**       | 구분자 규칙으로 **토큰 분리/트리밍**                  | `List<String> tokenize(String, Delimiters)`         | Domain     |
-| **Validator**       | 불변식 검증 *(빈 토큰, 음수/0, 비숫자, 선행 0, 형식 위반)* | `void validate(List<String>)`                       | Domain     |
-| **Numbers**         | **불변** 숫자 컬렉션, 합산 *(오버플로 감지)*           | `long sum()`                                        | Domain     |
-| **Delimiters**      | 구분자 값 객체 *(정규식 변환)*                     | `String toRegex()`                                  | Domain     |
-
-
-
+| **역할(Role)**             | **책임(Responsibility)**                   | **공개 메시지(Interface)**                                | **계층**     |
+|--------------------------|------------------------------------------|------------------------------------------------------|------------|
+| **InputView**            | 사용자 입력 수집                                | `String readLine()`                                  | View       |
+| **OutputView**           | 결과/오류 출력                                 | `void printResult(int)`, `void printError(String)`   | View       |
+| **Controller**           | 흐름 제어 *(입력 → 계산 → 출력)*                   | `void handle()`                                      | Controller |
+| **Calculator**           | 도메인 파사드 — 합계 계산 진입점                      | `int sumOf(String input)`                            | Domain     |
+| **Expression**           | 입력 해석 오케스트레이션 *(형태 인식 → 토큰화 → 검증 → 숫자화)* | `Expression from(String raw)`                        | Domain     |
+| **InputFormFactory**     | 입력 형태 식별 및 `InputForm` 생성                | `InputForm of(String raw)`                           | Domain     |
+| **InputFormRecognizer**  | 입력 형태 인식 *(체인 요소)*                       | `Optional<InputForm> recognize(String raw)`          | Domain     |
+| **CustomFormRecognizer** | `"//X\n"` 형식 인식 → `CustomForm` 생성        | `Optional<InputForm> recognize(String raw)`          | Domain     |
+| **BasicFormRecognizer**  | 일반 입력 → `BasicForm` 생성                   | `Optional<InputForm> recognize(String raw)`          | Domain     |
+| **InputForm**            | 해석된 입력(구분자 + 본문) 표현 *(record)*           | `Delimiters delimiters()`, `String body()`           | Domain     |
+| **BasicForm**            | 기본 구분자(`,`, `:`)를 사용하는 입력 표현 *(record)*  | `Delimiters delimiters()`, `String body()`           | Domain     |
+| **CustomForm**           | 커스텀 구분자를 사용하는 입력 표현 *(record)*           | `Delimiters delimiters()`, `String body()`           | Domain     |
+| **Tokenizer**            | 구분자 기준으로 문자열을 토큰 리스트로 분리                 | `List<String> split(String body, Delimiters delims)` | Domain     |
+| **Validator**            | 토큰 유효성 검사 *(빈/비정수/≤0)*                   | `void validate(List<String> tokens)`                 | Domain     |
+| **Numbers**              | 숫자 컬렉션 *(Value Object)*, 합계 계산           | `int sum()`                                          | Domain     |
+| **Delimiters**           | 구분자 집합 *(Value Object)*, 정규식 생성          | `String toRegex()`                                   | Domain     |
 
