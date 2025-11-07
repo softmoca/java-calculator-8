@@ -1,5 +1,7 @@
 package calculator;
 
+import java.util.regex.Pattern;
+
 public class Delimiter {
     private static final String DEFAULT_PATTERN = "[,:]";
 
@@ -14,6 +16,10 @@ public class Delimiter {
 
     public static Delimiter getDefault() {
         return DEFAULT;
+    }
+
+    public static Delimiter custom(String delimiter) {
+        return new Delimiter(Pattern.quote(delimiter));
     }
 
     public String[] split(String input) {
