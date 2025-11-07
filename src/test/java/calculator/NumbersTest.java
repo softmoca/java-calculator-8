@@ -1,6 +1,7 @@
 package calculator;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
 
@@ -29,5 +30,13 @@ public class NumbersTest {
         assertThat(numbers.sum()).isEqualTo(6);
     }
 
+    @Test
+    void 음수가_포함되면_예외가_발생한다() {
+        String[] tokens = {"-1", "2"};
+
+        assertThatThrownBy(() -> Numbers.from(tokens))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("음수");
+    }
 
 }
