@@ -14,12 +14,36 @@ public class Expression {
 
     public static Expression from(String input) {
 
+        if (input.isEmpty()) {
+            return new Expression(
+                    Delimiter.getDefault(),
+                    input
+            );
+        }
+
+        if (input.startsWith(CUSTOM_PREFIX)) {
+            return parseCustomFormat(input);
+        }
+
         return new Expression(
                 Delimiter.getDefault(),
                 input
         );
     }
 
+    private static Expression parseCustomFormat(String input) {
+
+        int delimiterEndIndex = input.indexOf(CUSTOM_SUFFIX);
+
+        String customDelimiter = input.substring(2, delimiterEndIndex);
+
+        String numbersText = input.substring(delimiterEndIndex + 1);
+
+        return new Expression(
+                Delimiter.custom(customDelimiter),
+                numbersText
+        );
+    }
 
     public Delimiter getDelimiter() {
         return delimiter;
