@@ -13,7 +13,16 @@ public class Numbers {
     public static Numbers from(String[] tokens) {
 
         List<Integer> numbers = Arrays.stream(tokens)
-                .map(Integer::parseInt)
+                .map(token -> {
+                    if (token.trim().isEmpty()) {
+                        throw new IllegalArgumentException(
+                                "[ERROR] 빈 값은 허용되지 않습니다"
+                        );
+                    }
+
+                    return Integer.parseInt(token.trim());
+
+                })
                 .peek(n -> {
                     if (n < 0) {
                         throw new IllegalArgumentException(

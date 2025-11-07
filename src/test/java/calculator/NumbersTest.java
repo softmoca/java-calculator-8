@@ -46,7 +46,7 @@ public class NumbersTest {
 
         assertThatThrownBy(() -> Numbers.from(tokens))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("숫자가 아닌 값");
+                .hasMessageContaining("빈 값");
     }
 
 }
