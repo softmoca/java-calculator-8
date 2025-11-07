@@ -7,8 +7,10 @@ public class StringCalculator {
             return 0;
         }
 
-        Delimiter delimiter = Delimiter.getDefault();
-        String[] tokens = delimiter.split(input);
+        Expression expression = Expression.from(input);
+
+        String[] tokens = expression.getDelimiter()
+                .split(expression.getNumbersText());
 
         Numbers numbers = Numbers.from(tokens);
 
