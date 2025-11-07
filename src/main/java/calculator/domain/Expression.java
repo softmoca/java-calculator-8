@@ -13,18 +13,9 @@ public class Expression {
     }
 
     public static Expression from(String input) {
-
-        if (input.isEmpty()) {
-            return new Expression(
-                    Delimiter.getDefault(),
-                    input
-            );
-        }
-
         if (input.startsWith(CUSTOM_PREFIX)) {
             return parseCustomFormat(input);
         }
-
         return new Expression(
                 Delimiter.getDefault(),
                 input
