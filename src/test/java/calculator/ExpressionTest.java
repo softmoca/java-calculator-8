@@ -25,7 +25,7 @@ class ExpressionTest {
     @Test
     void 커스텀_구분자_형식을_파싱한다() {
         // given
-        String input = "//;\n1;2;3";
+        String input = "//;\\n1;2;3";
 
         // when
         Expression expression = Expression.from(input);

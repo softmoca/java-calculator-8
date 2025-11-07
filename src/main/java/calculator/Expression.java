@@ -2,7 +2,7 @@ package calculator;
 
 public class Expression {
     private static final String CUSTOM_PREFIX = "//";
-    private static final String CUSTOM_SUFFIX = "\n";
+    private static final String CUSTOM_SUFFIX = "\\n";
 
     private final Delimiter delimiter;
     private final String numbersText;
@@ -37,7 +37,7 @@ public class Expression {
 
         String customDelimiter = input.substring(2, delimiterEndIndex);
 
-        String numbersText = input.substring(delimiterEndIndex + 1);
+        String numbersText = input.substring(delimiterEndIndex + 2);
 
         return new Expression(
                 Delimiter.custom(customDelimiter),

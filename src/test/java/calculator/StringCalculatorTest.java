@@ -20,7 +20,7 @@ public class StringCalculatorTest {
     void 커스텀_구분자로_합을_계산한다() {
         StringCalculator calculator = new StringCalculator();
 
-        int result = calculator.calculate("//;\n1;2;3");
+        int result = calculator.calculate("//;\\n1;2;3");
 
         assertThat(result).isEqualTo(6);
     }
