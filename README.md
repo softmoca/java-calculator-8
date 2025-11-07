@@ -64,6 +64,44 @@
 - 전체 흐름 조율
 - Delimiter와 Numbers 사용
 
+## 문자열 계산기 TODO
+
+## Phase 1: 핵심 도메인
+
+### Numbers
+
+- [ ] String[] 배열로 생성
+- [ ] 각 문자열을 int로 변환
+- [ ] 합 계산 (sum())
+- [ ] 음수 검증
+- [ ] 빈 문자열 검증
+
+### Delimiter
+
+- [ ] 기본 구분자 지원 (쉼표, 콜론)
+- [ ] split() 메서드
+- [ ] 커스텀 구분자 파싱
+- [ ] 정규식 특수문자 처리
+
+## Phase 2: 계산기
+
+### StringCalculator
+
+- [ ] calculate(String input)
+- [ ] 빈 문자열 처리
+- [ ] Delimiter 사용
+- [ ] Numbers 사용
+- [ ] 결과 반환
+
+## Phase 3: 입출력
+
+### Application
+
+- [ ] 입력 받기
+- [ ] 계산 실행
+- [ ] 결과 출력
+- [ ] 예외 처리
+
 
 
 
