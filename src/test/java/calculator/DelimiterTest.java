@@ -19,4 +19,17 @@ public class DelimiterTest {
     }
 
 
+    @Test
+    void 커스텀_구분자로_문자열을_분리한다() {
+        // given
+        Delimiter delimiter = Delimiter.custom(";");
+
+        // when
+        String[] result = delimiter.split("1;2;3");
+
+        // then
+        assertThat(result).containsExactly("1", "2", "3");
+    }
+
+
 }
