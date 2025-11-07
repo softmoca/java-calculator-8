@@ -49,4 +49,14 @@ public class NumbersTest {
                 .hasMessageContaining("빈 값");
     }
 
+    @Test
+    void 양수가아닌_문자열이_포함되면_예외가_발생한다() {
+        String[] tokens = {"1", "kk", "2"};
+
+        assertThatThrownBy(() -> Numbers.from(tokens))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("숫자가 아닌 값");
+    }
+
+
 }
