@@ -14,6 +14,13 @@ public class Numbers {
 
         List<Integer> numbers = Arrays.stream(tokens)
                 .map(Integer::parseInt)
+                .peek(n -> {
+                    if (n < 0) {
+                        throw new IllegalArgumentException(
+                                "[ERROR] 음수는 허용되지 않습니다: " + n
+                        );
+                    }
+                })
                 .toList();
 
         return new Numbers(numbers);
