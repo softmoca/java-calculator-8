@@ -20,7 +20,13 @@ public class Numbers {
                         );
                     }
 
-                    return Integer.parseInt(token.trim());
+                    try {
+                        return Integer.parseInt(token.trim());
+                    } catch (NumberFormatException e) {
+                        throw new IllegalArgumentException(
+                                "[ERROR] 숫자가 아닌 값: " + token
+                        );
+                    }
 
                 })
                 .peek(n -> {
