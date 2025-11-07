@@ -39,4 +39,14 @@ public class NumbersTest {
                 .hasMessageContaining("음수");
     }
 
+
+    @Test
+    void 빈_문자열이_포함되면_예외가_발생한다() {
+        String[] tokens = {"1", "", "2"};
+
+        assertThatThrownBy(() -> Numbers.from(tokens))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("숫자가 아닌 값");
+    }
+
 }
