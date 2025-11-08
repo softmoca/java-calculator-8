@@ -58,5 +58,21 @@ public class NumbersTest {
                 .hasMessageContaining("숫자가 아닌 값");
     }
 
+    @Test
+    void 같은_값을_가진_Numbers는_동등하다() {
+        Numbers numbers1 = Numbers.from(new String[]{"1", "2", "3"});
+        Numbers numbers2 = Numbers.from(new String[]{"1", "2", "3"});
+
+        assertThat(numbers1).isEqualTo(numbers2);
+    }
+
+    @Test
+    void 다른_값을_가진_Numbers는_동등하지_않다() {
+        Numbers numbers1 = Numbers.from(new String[]{"1", "2", "3"});
+        Numbers numbers2 = Numbers.from(new String[]{"1", "2"});
+
+        assertThat(numbers1).isNotEqualTo(numbers2);
+    }
+
 
 }
