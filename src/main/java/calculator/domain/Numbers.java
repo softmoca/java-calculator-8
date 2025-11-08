@@ -2,6 +2,7 @@ package calculator.domain;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Numbers {
     private final List<Integer> values;
@@ -48,5 +49,19 @@ public class Numbers {
         return values.stream()
                 .mapToInt(Integer::intValue)
                 .sum();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Numbers numbers = (Numbers) o;
+        return Objects.equals(values, numbers.values);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(values);
     }
 }
