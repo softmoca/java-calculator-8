@@ -1,5 +1,6 @@
 package calculator.domain;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Delimiter {
@@ -24,5 +25,19 @@ public class Delimiter {
 
     public String[] split(String input) {
         return input.split(pattern);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Delimiter delimiter = (Delimiter) o;
+        return Objects.equals(pattern, delimiter.pattern);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(pattern);
     }
 }
