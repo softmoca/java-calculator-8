@@ -36,6 +36,9 @@ public class Expression {
         );
     }
 
+    public Delimiter getDelimiter() {
+        return delimiter;
+    }
 
     public String getNumbersText() {
         return numbersText;
