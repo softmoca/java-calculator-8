@@ -23,15 +23,28 @@ public class Expression {
     }
 
     private static Expression parseCustomFormat(String input) {
-
         int delimiterEndIndex = input.indexOf(CUSTOM_SUFFIX);
-        if (delimiterEndIndex != 3) {
-            throw new IllegalArgumentException("[ERROR] 커스텀구분자 형식이 잘못되었습니다.");
+
+        if (delimiterEndIndex == -1) {
+            throw new IllegalArgumentException(
+                    "[ERROR] 커스텀 구분자 형식이 잘못되었습니다."
+            );
         }
 
-        String customDelimiter = input.substring(2, delimiterEndIndex);
+        String customDelimiter = input.substring(
+                CUSTOM_PREFIX.length(),
+                delimiterEndIndex
+        );
 
-        String numbersText = input.substring(delimiterEndIndex + 2);
+        if (customDelimiter.length() != 1) {
+            throw new IllegalArgumentException(
+                    "[ERROR] 커스텀 구분자는 1글자여야 합니다."
+            );
+        }
+
+        String numbersText = input.substring(
+                delimiterEndIndex + CUSTOM_SUFFIX.length()
+        );
 
         return new Expression(
                 Delimiter.custom(customDelimiter),
