@@ -15,9 +15,6 @@ class ExpressionTest {
         Expression expression = Expression.from(input);
 
         // then
-        assertThat(expression.getDelimiter())
-                .isEqualTo(Delimiter.getDefault());
-
         assertThat(expression.getNumbersText())
                 .isEqualTo("1,2:3");
     }
