@@ -43,4 +43,9 @@ public class Expression {
     public String getNumbersText() {
         return numbersText;
     }
+
+    public Numbers toNumbers() {
+        String[] tokens = delimiter.split(numbersText);
+        return Numbers.from(tokens);
+    }
 }
