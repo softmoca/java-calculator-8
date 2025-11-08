@@ -8,12 +8,7 @@ public class StringCalculator {
         }
 
         Expression expression = Expression.from(input);
-
-        String[] tokens = expression.getDelimiter()
-                .split(expression.getNumbersText());
-
-        Numbers numbers = Numbers.from(tokens);
-
+        Numbers numbers = expression.toNumbers();
         return numbers.sum();
     }
 }
