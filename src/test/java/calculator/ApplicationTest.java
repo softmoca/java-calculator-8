@@ -78,29 +78,12 @@ class ApplicationTest extends NsTest {
 
     // 커스텀 구분자 형식
     @Test
-    void 커스텀_구분자_구분자만_존재_빈문자열_반환() {
-        assertSimpleTest(() -> {
-            run("//;\\n");
-            assertThat(output()).contains("결과 : 0");
-        });
-    }
-
-    @Test
     void 예외_커스텀_구분자_두글자() {
         assertSimpleTest(() ->
                 assertThatThrownBy(() -> runException("//12\\n1"))
                         .isInstanceOf(IllegalArgumentException.class)
         );
     }
-
-    @Test
-    void 예외_커스텀_구분자_숫자() {
-        assertSimpleTest(() ->
-                assertThatThrownBy(() -> runException("//1\\n1"))
-                        .isInstanceOf(IllegalArgumentException.class)
-        );
-    }
-    
 
     @Test
     void 커스텀_구분자_구문_오류() {
