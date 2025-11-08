@@ -35,4 +35,20 @@ class ExpressionTest {
                 .isEqualTo("1;2;3");
 
     }
+
+    @Test
+    void 기본_구분자로_Numbers를_생성한다() {
+
+        // given
+        String input = "1,2:3";
+        Expression expression = Expression.from(input);
+
+        // when
+        Numbers numbers = expression.toNumbers();
+
+        // then
+        assertThat(numbers.sum()).isEqualTo(6);
+    }
+
+
 }
