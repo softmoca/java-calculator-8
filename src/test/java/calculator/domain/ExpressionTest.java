@@ -57,12 +57,13 @@ class ExpressionTest {
         // given
         String input = "//;\\n1;2;3";
         Expression expression = Expression.from(input);
+        Numbers expected = Numbers.from(new String[]{"1", "2", "3"});
 
         // when
-        Numbers numbers = expression.toNumbers();
+        Numbers actual = expression.toNumbers();
 
         // then
-        assertThat(numbers.sum()).isEqualTo(6);
+        assertThat(actual).isEqualTo(expected);
     }
 
 
