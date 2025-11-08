@@ -25,6 +25,9 @@ public class Expression {
     private static Expression parseCustomFormat(String input) {
 
         int delimiterEndIndex = input.indexOf(CUSTOM_SUFFIX);
+        if (delimiterEndIndex != 3) {
+            throw new IllegalArgumentException("[ERROR] 커스텀구분자 형식이 잘못되었습니다.");
+        }
 
         String customDelimiter = input.substring(2, delimiterEndIndex);
 
