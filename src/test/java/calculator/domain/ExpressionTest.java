@@ -50,5 +50,19 @@ class ExpressionTest {
         assertThat(numbers.sum()).isEqualTo(6);
     }
 
+    @Test
+    void 커스텀_구분자로_Numbers를_생성한다() {
+
+        // given
+        String input = "//;\\n1;2;3";
+        Expression expression = Expression.from(input);
+
+        // when
+        Numbers numbers = expression.toNumbers();
+
+        // then
+        assertThat(numbers.sum()).isEqualTo(6);
+    }
+
 
 }
