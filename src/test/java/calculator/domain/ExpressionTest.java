@@ -13,10 +13,10 @@ class ExpressionTest {
 
         // when
         Expression expression = Expression.from(input);
+        Numbers numbers = expression.toNumbers();
 
         // then
-        assertThat(expression.getNumbersText())
-                .isEqualTo("1,2:3");
+        assertThat(numbers).isEqualTo(Numbers.from(new String[]{"1", "2", "3"}));
     }
 
     @Test
@@ -26,44 +26,10 @@ class ExpressionTest {
 
         // when
         Expression expression = Expression.from(input);
+        Numbers numbers = expression.toNumbers();
 
         // then
-        assertThat(expression.getDelimiter())
-                .isEqualTo(Delimiter.custom(";"));
-        assertThat(expression.getNumbersText())
-                .isEqualTo("1;2;3");
-
-    }
-
-    @Test
-    void 기본_구분자로_Numbers를_생성한다() {
-
-        // given
-        String input = "1,2:3";
-        Expression expression = Expression.from(input);
-        Numbers expected = Numbers.from(new String[]{"1", "2", "3"});
-
-        // when
-        Numbers actual = expression.toNumbers();
-
-        // then
-        assertThat(actual).isEqualTo(expected);
-
-    }
-
-    @Test
-    void 커스텀_구분자로_Numbers를_생성한다() {
-
-        // given
-        String input = "//;\\n1;2;3";
-        Expression expression = Expression.from(input);
-        Numbers expected = Numbers.from(new String[]{"1", "2", "3"});
-
-        // when
-        Numbers actual = expression.toNumbers();
-
-        // then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(numbers).isEqualTo(Numbers.from(new String[]{"1", "2", "3"}));
     }
 
 
