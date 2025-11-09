@@ -52,11 +52,11 @@ public class Expression {
         );
     }
 
-    public Delimiter getDelimiter() {
+    Delimiter getDelimiter() {
         return delimiter;
     }
 
-    public String getNumbersText() {
+    String getNumbersText() {
         return numbersText;
     }
 

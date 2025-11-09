@@ -45,9 +45,7 @@ public class DelimiterTest {
         Delimiter delimiter1 = Delimiter.getDefault();
         Delimiter delimiter2 = Delimiter.getDefault();
 
-        // 같은 인스턴스
         assertThat(delimiter1).isSameAs(delimiter2);
-        // 당연히 equals도 true
         assertThat(delimiter1).isEqualTo(delimiter2);
     }
 
