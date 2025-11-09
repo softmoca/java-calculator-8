@@ -52,14 +52,6 @@ public class Expression {
         );
     }
 
-    Delimiter getDelimiter() {
-        return delimiter;
-    }
-
-    String getNumbersText() {
-        return numbersText;
-    }
-
     public Numbers toNumbers() {
         String[] tokens = delimiter.split(numbersText);
         return Numbers.from(tokens);
